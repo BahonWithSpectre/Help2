@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HELP</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/font-awesome/font-awesome.min.css">
+
+    @*<link rel="stylesheet" href="~/css/index.css">*@
+
+    <script src="~/js/jQuery.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="header">
+            <span class="red-line"></span>
+            <a class="logo" href="/Home/Index">
+                <img src="~/img/logo.png" alt="Help">
+            </a>
+            <a href="/Home/Creat" class="help">
+                Могу помочь / Нужна помощь
+            </a>
+        </div>
+        <div class="content">
+            <div class="main">
+                <h1>Вместе ЗКО</h1>
+                <p>
+                    ЭТО - площадка, где <br />
+                    в это непростое время, люди могут объединяться, находить, помогать друг другу!
+                </p>
+                <p></p>
+                <p>Ведь объединяясь мы вместе уже решили ряд задач и проблем</p>
+
+            </div>
+            @RenderBody()
+        </div>
+        <div class="back-to-top">
+            <i class="fa fa-angle-double-up"></i>
+        </div>
+        <div class="footer">
+            <p>© 2020, Все права защищены </p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                if ($(window).scrollTop() > 90) {
+                    $('.header').addClass('fix-header');
+                    $('.back-to-top').css('opacity', 1);
+                } else {
+                    $('.header').removeClass('fix-header');
+                    $('.back-to-top').css('opacity', 0);
+                }
+            });
+            $('.back-to-top').click(function () {
+                var offset = 0;
+                $('html, body').animate({
+                    scrollTop: $('#section').offset().top - 70
+                }, 300);
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

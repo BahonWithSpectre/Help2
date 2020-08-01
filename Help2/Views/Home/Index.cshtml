@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Help2.DbFolder.Help>
+@{
+    ViewData["Title"] = "Главное";
+}
+<link rel="stylesheet" href="~/css/index.css">
+
+
+<div id="section" class="section">
+
+    <div class="sidebar">
+        <p>
+            Для этого вам нужно:
+        <p style="font-size:14px!important;color:darkgreen;">
+            1) Выбрать город
+        <p style="font-size:14px!important;color:darkgreen;">
+            2) Выбрать категорию
+        <p style="font-size:14px!important;color:darkgreen;">
+            3) Оставить заявку
+        </p>
+        <hr />
+        <br />
+        <form asp-action="Index">
+            <label for="city">Город:</label>
+            <select name="city" id="city">
+                <option value="0">Все</option>
+                @foreach (var g in ViewBag.City)
+                {
+                    <option value="@g.Id">@g.CityName</option>
+                }
+            </select>
+            <label for="category">Категория:</label>
+            <select name="type" id="category">
+                <option value="all">Все</option>
+                <option value="Базовые потребности">Базовые потребности</option>
+                <option value="Медикаменты">Медикаменты</option>
+                <option value="Образование">Образование</option>
+                <option value="Одежда">Одежда</option>
+            </select>
+            <button type="submit">Поиск</button>
+        </form>
+
+        <div class="tabs">
+            <a href="#" class="yellow-tab act-tab">Могу помочь</a>
+            <a href="#">Нужна помощь</a>
+            <a href="#" class="green-tab">Уже помогли</a>
+        </div>
+    </div>
+
+    <div class="result">
+        <div class="result-item yellow-result act-result">
+            @foreach (var d in Model)
+            {
+                if (d.Category == "Могу Помочь")
+                {
+                    <div class="help-block">
+                        <div class="help-text">
+                            <div class="help-title">@d.Title</div>
+                            <p>@d.Info</p>
+                        </div>
+                        <div class="help-data">
+                            <div class="help-title" style="text-decoration:none!important;">@d.UserName</div>
+                            <p class="help-city"><span>Город:</span>@d.City.CityName</p>
+                            <p class="help-phone"><span>Телефон:</span>@d.PhoneNumber</p>
+                            <div class="social">
+                                <a href="tel:@d.PhoneNumber" class="telephone">
+                                    <i class="fa fa-phone"></i>
+                                </a>
+                                @if (d.WhatsApp == true)
+                                {
+                                    <a href="https://wa.me/@d.PhoneNumber" class="whatsapp">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="result-item">
+            @foreach (var d in Model)
+            {
+                if (d.Category == "Нужна Помощь")
+                {
+                    <div class="help-block">
+                        <div class="help-text">
+                            <div class="help-title">@d.Title</div>
+                            <p>@d.Info</p>
+                        </div>
+                        <div class="help-data">
+                            <div class="help-title" style="text-decoration:none!important;">@d.UserName</div>
+                            <p class="help-city"><span>Город:</span>@d.City.CityName</p>
+                            <p class="help-phone"><span>Телефон:</span>@d.PhoneNumber</p>
+                            <div class="social">
+                                @if (d.WhatsApp == true)
+                                {
+                                    <a href="whatsapp" class="whatsapp">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </a>
+                                }
+                                @if (d.Telegram == true)
+                                {
+                                    <a href="telegram" class="telegram">
+                                        <i class="fa fa-telegram"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="result-item green-result">
+            @foreach (var d in Model)
+            {
+                if (d.Category == "Уже Помогли")
+                {
+                    <div class="help-block">
+                        <div class="help-text">
+                            <div class="help-title">@d.Title</div>
+                            <p>@d.Info</p>
+                        </div>
+                        <div class="help-data">
+                            <div class="help-title" style="text-decoration:none!important;">@d.UserName</div>
+                            <p class="help-city"><span>Город:</span>@d.City.CityName</p>
+                            <p class="help-phone"><span>Телефон:</span>@d.PhoneNumber</p>
+                            <div class="social">
+                                @if (d.WhatsApp == true)
+                                {
+                                    <a href="whatsapp" class="whatsapp">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </a>
+                                }
+                                @if (d.Telegram == true)
+                                {
+                                    <a href="telegram" class="telegram">
+                                        <i class="fa fa-telegram"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.tabs > a').click(function (e) {
+            e.preventDefault();
+            $('.tabs > a').removeClass('act-tab');
+            $(this).addClass('act-tab');
+
+            $('.result-item').removeClass('act-result');
+            $('.result-item').eq($(this).index()).addClass('act-result');
+        });
+    });
+</script>
+
