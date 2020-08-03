@@ -164,7 +164,8 @@
             let city = $('#city').val();
             let type = $('#category').val();
 
-            let response = await fetch(`https://localhost:5001/Home/Search?city=${city}&type=${type}`, {
+            //let response = await fetch(`https://localhost:5001/Home/Search?city=${city}&type=${type}`, {
+            let response = await fetch(`http://vmeste-zko.kz/Home/Search?city=${city}&type=${type}`, {
                 header: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
