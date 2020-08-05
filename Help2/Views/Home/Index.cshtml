@@ -8,18 +8,22 @@
 <div id="section" class="section">
 
     <div class="sidebar">
-        <p>
+        <p style="margin-bottom: 10px">
             Для этого вам нужно:
+        </p>
         <p style="font-size:14px!important;color:darkgreen;">
             1) Выбрать город
+        </p>
         <p style="font-size:14px!important;color:darkgreen;">
             2) Выбрать категорию
+        </p>
         <p style="font-size:14px!important;color:darkgreen;">
             3) Оставить заявку
         </p>
+        <br />
         <hr />
         <br />
-        <form asp-action="Index">
+        <form>
             <label for="city">Город:</label>
             <select name="city" id="city">
                 <option value="0">Все</option>
@@ -36,18 +40,18 @@
                 <option value="Образование">Образование</option>
                 <option value="Одежда">Одежда</option>
             </select>
-            <button type="submit">Поиск</button>
+            <button id="search-btn" type="button">Поиск</button>
         </form>
 
         <div class="tabs">
-            <a href="#" class="yellow-tab act-tab">Могу помочь</a>
-            <a href="#">Нужна помощь</a>
-            <a href="#" class="green-tab">Уже помогли</a>
+            <a href="#" class="yellow-tab act-tab"><span>Могу помочь</span></a>
+            <a href="#"><span>Нужна помощь</span></a>
+            <a href="#" class="green-tab"><span>Уже помогли</span></a>
         </div>
     </div>
 
     <div class="result">
-        <div class="result-item yellow-result act-result">
+        <div id="yellow-result" class="result-item yellow-result act-result">
             @foreach (var d in Model)
             {
                 if (d.Category == "Могу Помочь")
@@ -77,7 +81,7 @@
                 }
             }
         </div>
-        <div class="result-item">
+        <div id="red-result" class="result-item">
             @foreach (var d in Model)
             {
                 if (d.Category == "Нужна Помощь")
@@ -110,7 +114,7 @@
                 }
             }
         </div>
-        <div class="result-item green-result">
+        <div id="green-result" class="result-item green-result">
             @foreach (var d in Model)
             {
                 if (d.Category == "Уже Помогли")
@@ -147,6 +151,77 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('.result').css('min-height', '100vh');
+
+        $('#search-btn').click(async function () {
+            $('.result-item').html('<p class="loader" style="padding: 25px">Загрузка...</p>');
+
+            var offset = 0;
+            $('html, body').animate({
+                scrollTop: $('.result').offset().top - 100
+            }, 500);
+
+            let city = $('#city').val();
+            let type = $('#category').val();
+
+            //let response = await fetch(`https://localhost:5001/Home/Search?city=${city}&type=${type}`, {
+            let response = await fetch(`http://vmeste-zko.kz/Home/Search?city=${city}&type=${type}`, {
+                header: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+            })
+            let result = await response.json();
+            console.log(result)
+
+            let r;
+            result.map(c => {
+                var w = c.whatsApp === true ? `<a href="https://wa.me/${c.phoneNumber}" class="whatsapp">
+                    <i class="fa fa-whatsapp"></i>
+                </a>` : `<span style="display: none;"></span>`;
+
+                r = `<div class="help-block">
+                    <div class="help-text">
+                        <div class="help-title">${c.title}</div>
+                        <p>${c.info}</p>
+                    </div>
+                    <div class="help-data">
+                        <div class="help-title" style="text-decoration:none!important;">${c.userName}</div>
+                        <p class="help-city"><span>Город:</span>${c.city.cityName}</p>
+                        <p class="help-phone"><span>Телефон:</span>${c.phoneNumber}</p>
+                        <div class="social">
+                            <a href="tel:${c.phoneNumber}" class="telephone">
+                                <i class="fa fa-phone"></i>
+                            </a>
+                            ${w}
+                        </div>
+                    </div>
+                </div>`;
+
+                if (c.category === 'Могу Помочь') {
+                    $('#yellow-result').append(r);
+                }
+                else if (c.category === 'Нужна Помощь') {
+                    $('#red-result').append(r);
+                }
+                else if (c.category === 'Уже Помогли') {
+                    $('#green-result').append(r);
+                }
+            })
+            
+            //$('.loader').css('display', 'none');
+            $('.loader').remove();
+
+
+            if ($('.result-item').is(':empty')) {
+                $('.result-item').html('<p style="padding: 25px">Еще нет никаких данных!</p>');
+            }
+
+            $('html, body').animate({
+                scrollTop: $('.result').offset().top - 100
+            }, 500);
+        })
+
         $('.tabs > a').click(function (e) {
             e.preventDefault();
             $('.tabs > a').removeClass('act-tab');

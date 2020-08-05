@@ -34,8 +34,8 @@ namespace Help2.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult Index(string category, int? city, string type)
+        [HttpGet]
+        public IActionResult Search(string category, int? city, string type)
         {
             var list = db.Helps.Include(p => p.City).ToList();
 
@@ -54,7 +54,7 @@ namespace Help2.Controllers
                 list = list.Where(p => p.Type == type).ToList();
             }
 
-            return View(list);
+            return Json(list);
         }
 
 
@@ -69,8 +69,6 @@ namespace Help2.Controllers
         [HttpPost]
         public IActionResult Creat(Help help)
         {
-            var tt = help;
-
             db.Helps.Add(help);
             db.SaveChanges();
 

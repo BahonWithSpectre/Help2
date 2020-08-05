@@ -13,11 +13,11 @@
         <div class="form-blocks">
             <div class="form-block">
                 <label for="username">Ваше имя:</label>
-                <input id="username" asp-for="UserName" type="text" required>
+                <input id="username" asp-for="UserName" type="text" required placeholder="Введите имя...">
                 <span asp-validation-for="UserName" class="text-danger"></span>
 
                 <label for="phone">Номер телефона:</label>
-                <input id="phone" asp-for="PhoneNumber" type="number" required>
+                <input id="phone" asp-for="PhoneNumber" type="number" required placeholder="77078889900">
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 
                 <div class="social">
