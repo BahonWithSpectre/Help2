@@ -47,6 +47,10 @@
             <a href="#" class="yellow-tab act-tab"><span>Могу помочь</span></a>
             <a href="#"><span>Нужна помощь</span></a>
             <a href="#" class="green-tab"><span>Уже помогли</span></a>
+
+            <!--еще 2 кнопка-->
+            <a>Нужно сделать</a>
+            <a>Сделаю</a>
         </div>
     </div>
 
@@ -118,6 +122,77 @@
             @foreach (var d in Model)
             {
                 if (d.Category == "Уже Помогли")
+                {
+                    <div class="help-block">
+                        <div class="help-text">
+                            <div class="help-title">@d.Title</div>
+                            <p>@d.Info</p>
+                        </div>
+                        <div class="help-data">
+                            <div class="help-title" style="text-decoration:none!important;">@d.UserName</div>
+                            <p class="help-city"><span>Город:</span>@d.City.CityName</p>
+                            <p class="help-phone"><span>Телефон:</span>@d.PhoneNumber</p>
+                            <div class="social">
+                                @if (d.WhatsApp == true)
+                                {
+                                    <a href="whatsapp" class="whatsapp">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </a>
+                                }
+                                @if (d.Telegram == true)
+                                {
+                                    <a href="telegram" class="telegram">
+                                        <i class="fa fa-telegram"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+
+        <!--Нужно сделать-->
+        <div id="green-result" class="result-item green-result">
+            @foreach (var d in Model)
+            {
+                if (d.Category == "Нужно сделать")
+                {
+                    <div class="help-block">
+                        <div class="help-text">
+                            <div class="help-title">@d.Title</div>
+                            <p>@d.Info</p>
+                        </div>
+                        <div class="help-data">
+                            <div class="help-title" style="text-decoration:none!important;">@d.UserName</div>
+                            <p class="help-city"><span>Город:</span>@d.City.CityName</p>
+                            <p class="help-phone"><span>Телефон:</span>@d.PhoneNumber</p>
+                            <div class="social">
+                                @if (d.WhatsApp == true)
+                                {
+                                    <a href="whatsapp" class="whatsapp">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </a>
+                                }
+                                @if (d.Telegram == true)
+                                {
+                                    <a href="telegram" class="telegram">
+                                        <i class="fa fa-telegram"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <!--Сделаю-->
+        <div id="green-result" class="result-item green-result">
+            @foreach (var d in Model)
+            {
+                if (d.Category == "Сделаю")
                 {
                     <div class="help-block">
                         <div class="help-text">
