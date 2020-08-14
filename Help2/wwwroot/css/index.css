@@ -138,6 +138,13 @@
 .yellow-tab::after{
    background-color: #ffc107;
 }
+.orange-tab::after {
+    background-color: orange;
+}
+
+.blue-tab::after {
+    background-color: deepskyblue;
+}
 
 /* ----result----- */
 .result{
@@ -157,8 +164,8 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    box-shadow: inset 0 0 3px #24ce61;
-    border: 1px solid #24ce61;
+    box-shadow: inset 0 0 3px var(--red-color);
+    border: 1px solid var(--red-color);
     border-radius: 2px;
     padding: 15px;
     /* padding-bottom: 0; */
@@ -172,6 +179,16 @@
     border-color: #24ce61;
     box-shadow: inset 0 0 3px #ffc107;
 }
+.orange-result > .help-block {
+    border-color: orange;
+    box-shadow: inset 0 0 3px orange;
+}
+.blue-result > .help-block {
+    border-color: deepskyblue;
+    box-shadow: inset 0 0 3px deepskyblue;
+}
+
+
 .help-text {
    width: 60%;
 }

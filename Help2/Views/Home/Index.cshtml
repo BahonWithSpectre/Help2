@@ -47,10 +47,8 @@
             <a href="#" class="yellow-tab act-tab"><span>Могу помочь</span></a>
             <a href="#"><span>Нужна помощь</span></a>
             <a href="#" class="green-tab"><span>Уже помогли</span></a>
-
-            <!--еще 2 кнопка-->
-            <a>Нужно сделать</a>
-            <a>Сделаю</a>
+            <a href="#" class="orange-tab"><span>Нужно сделать</span></a>
+            <a href="#" class="blue-tab"><span>Сделаю</span></a>
         </div>
     </div>
 
@@ -102,14 +100,8 @@
                             <div class="social">
                                 @if (d.WhatsApp == true)
                                 {
-                                    <a href="whatsapp" class="whatsapp">
+                                    <a href="https://wa.me/@d.PhoneNumber" class="whatsapp">
                                         <i class="fa fa-whatsapp"></i>
-                                    </a>
-                                }
-                                @if (d.Telegram == true)
-                                {
-                                    <a href="telegram" class="telegram">
-                                        <i class="fa fa-telegram"></i>
                                     </a>
                                 }
                             </div>
@@ -135,14 +127,8 @@
                             <div class="social">
                                 @if (d.WhatsApp == true)
                                 {
-                                    <a href="whatsapp" class="whatsapp">
+                                    <a href="https://wa.me/@d.PhoneNumber" class="whatsapp">
                                         <i class="fa fa-whatsapp"></i>
-                                    </a>
-                                }
-                                @if (d.Telegram == true)
-                                {
-                                    <a href="telegram" class="telegram">
-                                        <i class="fa fa-telegram"></i>
                                     </a>
                                 }
                             </div>
@@ -154,7 +140,7 @@
 
 
         <!--Нужно сделать-->
-        <div id="green-result" class="result-item green-result">
+        <div id="orange-result" class="result-item orange-result">
             @foreach (var d in Model)
             {
                 if (d.Category == "Нужно сделать")
@@ -171,14 +157,8 @@
                             <div class="social">
                                 @if (d.WhatsApp == true)
                                 {
-                                    <a href="whatsapp" class="whatsapp">
+                                    <a href="https://wa.me/@d.PhoneNumber" class="whatsapp">
                                         <i class="fa fa-whatsapp"></i>
-                                    </a>
-                                }
-                                @if (d.Telegram == true)
-                                {
-                                    <a href="telegram" class="telegram">
-                                        <i class="fa fa-telegram"></i>
                                     </a>
                                 }
                             </div>
@@ -189,7 +169,7 @@
         </div>
 
         <!--Сделаю-->
-        <div id="green-result" class="result-item green-result">
+        <div id="blue-result" class="result-item blue-result">
             @foreach (var d in Model)
             {
                 if (d.Category == "Сделаю")
@@ -206,14 +186,8 @@
                             <div class="social">
                                 @if (d.WhatsApp == true)
                                 {
-                                    <a href="whatsapp" class="whatsapp">
+                                    <a href="https://wa.me/@d.PhoneNumber" class="whatsapp">
                                         <i class="fa fa-whatsapp"></i>
-                                    </a>
-                                }
-                                @if (d.Telegram == true)
-                                {
-                                    <a href="telegram" class="telegram">
-                                        <i class="fa fa-telegram"></i>
                                     </a>
                                 }
                             </div>
@@ -239,15 +213,17 @@
             let city = $('#city').val();
             let type = $('#category').val();
 
-            //let response = await fetch(`https://localhost:5001/Home/Search?city=${city}&type=${type}`, {
+
+            @*let response = await fetch(`https://localhost:57725/Home/Search?city=${city}&type=${type}`, {*@
+
             let response = await fetch(`http://vmeste-zko.kz/Home/Search?city=${city}&type=${type}`, {
                 header: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
-            })
+            });
             let result = await response.json();
-            console.log(result)
+            console.log(result);
 
             let r;
             result.map(c => {
@@ -281,6 +257,12 @@
                 }
                 else if (c.category === 'Уже Помогли') {
                     $('#green-result').append(r);
+                }
+                else if (c.category === 'Нужно сделать') {
+                    $('#orange-result').append(r);
+                }
+                else if (c.category === 'Сделаю') {
+                    $('#blue-result').append(r);
                 }
             })
             
